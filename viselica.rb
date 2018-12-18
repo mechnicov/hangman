@@ -1,9 +1,9 @@
 begin
-  require_relative "game"
-  require_relative "result_printer"
-  require_relative "word_reader"
+  require_relative 'game'
+  require_relative 'result_printer'
+  require_relative 'word_reader'
 rescue LoadError
-  abort "Файлы программы повреждены"
+  abort 'Файлы программы повреждены'
 end
 
 current_path = File.dirname(__FILE__)
@@ -17,7 +17,7 @@ begin
   file.close
   STDOUT.puts "\n" * 10, intro
 rescue SystemCallError
-  STDOUT.puts "\n" * 10, "Виселица"
+  STDOUT.puts "\n" * 10, 'Виселица'
 end
 
 sleep 2
