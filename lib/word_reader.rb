@@ -1,14 +1,10 @@
 class WordReader
   def read_from_file(file_name)
-    begin
-      file = File.new(file_name)
-      lines = file.readlines
-      file.close
-      lines.sample.chomp
-    rescue SystemCallError
-      abort 'Отсутствует база данных со словами'
-    rescue NoMethodError
-      abort 'База данных пустая'
-    end
+    raise 'Отсутствует база данных со словами.' unless File.exist?(file_name)
+    file = File.new(file_name)
+    lines = file.readlines
+    file.close
+    raise 'Отсутствуют слова в базе данных.' if lines.empty?
+    lines.sample.chomp
   end
 end

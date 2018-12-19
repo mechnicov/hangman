@@ -22,9 +22,7 @@ class Game
 
   # Формируем слово
   def get_letters(slovo)
-    if slovo.nil? || slovo.empty?
-      abort 'Слово отсутствует. Аварийный выход из программы'
-    end
+    raise 'Слово отсутствует.' if slovo.nil? || slovo.empty?
 
     slovo = slovo.upcase.split('').collect! do |letter|
       if letter == 'Ё'

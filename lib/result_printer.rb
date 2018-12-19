@@ -17,7 +17,7 @@ class ResultPrinter
     end
   end
 
-  # Выводим данные (слово, ошибки, плохие и хороши буквы)
+  # Выводим данные (слово, ошибки, плохие и хорошие буквы)
   def print_status(game)
     cls
     STDOUT.puts "\nСлово: #{get_word_for_print(game.letters, game.good_letters)}"

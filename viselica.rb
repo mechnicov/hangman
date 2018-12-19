@@ -1,10 +1,6 @@
-begin
   require_relative 'lib/game'
   require_relative 'lib/result_printer'
   require_relative 'lib/word_reader'
-rescue LoadError
-  abort 'Файлы программы повреждены'
-end
 
 current_path = File.dirname(__FILE__)
 
@@ -22,9 +18,13 @@ end
 
 sleep 2
 
-reader = WordReader.new
-slovo = reader.read_from_file(current_path + '/data/words.txt')
-game = Game.new(slovo)
+begin
+  reader = WordReader.new
+  slovo = reader.read_from_file(current_path + '/data/words.txt')
+  game = Game.new(slovo)
+rescue => error
+  abort "Ошибка. #{error.message} Аварийный выход"
+end
 
 while game.status == 0
   printer.print_status(game)
