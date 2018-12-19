@@ -5,7 +5,7 @@ class ResultPrinter
     current_path = File.dirname(__FILE__)
     counter = 0
     while counter <= 7
-      image_path = current_path + "/image/#{counter}.txt"
+      image_path = current_path + "/../data/images/#{counter}.txt"
       begin
         f = File.new(image_path)
         @status_image << f.read
