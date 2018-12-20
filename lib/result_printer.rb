@@ -1,3 +1,4 @@
+# Класс, отвечающий за вывод результатов на экран
 class ResultPrinter
   def initialize
     @status_image = []

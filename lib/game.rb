@@ -1,3 +1,4 @@
+# Класс, отвечающий за логику игры
 class Game
   attr_reader :letters, :good_letters, :bad_letters, :status, :errors
 

@@ -1,3 +1,4 @@
+# Класс, отвечающий за выбор слова из списка
 class WordReader
   def read_from_file(file_name)
     raise 'Отсутствует база данных со словами.' unless File.exist?(file_name)
