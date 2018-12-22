@@ -18,13 +18,9 @@ end
 
 sleep 2
 
-begin
-  reader = WordReader.new
-  slovo = reader.read_from_file(current_path + '/data/words.txt')
-  game = Game.new(slovo)
-rescue => error
-  abort "Ошибка. #{error.message} Аварийный выход"
-end
+reader = WordReader.new
+slovo = reader.read_from_file(current_path + '/data/words.txt')
+game = Game.new(slovo)
 
 while game.status == 0
   printer.print_status(game)

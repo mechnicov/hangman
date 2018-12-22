@@ -23,7 +23,7 @@ class Game
 
   # Формируем слово
   def get_letters(slovo)
-    raise 'Слово отсутствует.' if slovo.nil? || slovo.empty?
+    raise "Слово отсутствует. Проверьте файл 'data/words.txt'" if slovo.nil? || slovo.empty?
 
     slovo = slovo.upcase.split('').collect! do |letter|
       if letter == 'Ё'
