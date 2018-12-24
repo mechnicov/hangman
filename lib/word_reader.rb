@@ -1,10 +1,10 @@
-# Класс, отвечающий за выбор слова из списка
 class WordReader
-  def read_from_file(file_name)
-    file = File.new(file_name)
-    lines = file.readlines
-    file.close
+  def read_from_file(path)
+    return nil unless File.exist?(path)
+
+    lines = File.readlines(path, chomp: true)
     return nil if lines.empty?
-    lines.sample.chomp
+
+    lines.sample
   end
 end

@@ -1,13 +1,14 @@
-# Класс, отвечающий за логику игры
 class Game
-  attr_reader :letters, :good_letters, :bad_letters, :status, :errors
+  attr_reader :word, :good_letters, :bad_letters
+  attr_accessor :status, :errors
+  MAX_ERRORS = 7
 
-  def initialize(slovo)
-    @letters = get_letters(slovo)
-    @errors = 0
-    @bad_letters = []
+  def initialize(word)
+    @word         = form(word)
+    @errors       = 0
+    @bad_letters  = []
     @good_letters = []
-    @status = 0
+    @status       = :in_progress
   end
 
   def ask_letter
@@ -15,40 +16,71 @@ class Game
     letter = ''
     letter = STDIN.gets.chomp.upcase while letter == ''
     letter = 'Е' if letter == 'Ё'
-    letter = 'И' if letter == 'Й'
-    check(letter)
+    process(letter)
+  end
+
+  def in_progress?
+    status == :in_progress
+  end
+
+  def win?
+    status == :win
+  end
+
+  def losing?
+    status == :losing
+  end
+
+  def max_errors
+    MAX_ERRORS
+  end
+
+  def errors_left
+    MAX_ERRORS - errors
   end
 
   private
 
-  # Формируем слово
-  def get_letters(slovo)
-    raise "Слово отсутствует. Проверьте файл 'data/words.txt'" if slovo.nil? || slovo.empty?
+  def form(word)
+    raise "Слово отсутствует. Проверьте файл 'data/words.txt'" if word.nil? || word.empty?
 
-    slovo = slovo.upcase.split('').collect! do |letter|
-      if letter == 'Ё'
-        'Е'
-      elsif letter == 'Й'
-        'И'
-      else
-        letter
-      end
+    word.upcase.split('').map do |letter|
+      letter = 'Е' if letter == 'Ё'
+      letter
     end
-    slovo
   end
 
-  # Проверяем букву
-  def check(bukva)
-    return if @status == -1 || @status == 1
-    return if @good_letters.include?(bukva) || @bad_letters.include?(bukva)
+  def process(letter)
+    return if status == :losing || status == :win
+    return if repeated?(letter)
 
-    if @letters.include? bukva
-      @good_letters << bukva
-      @status = 1 if @good_letters.sort == @letters.uniq.sort
+    if good?(letter)
+      add_letter_to(good_letters, letter)
+      self.status = :win if guessed?
     else
-      @bad_letters << bukva
-      @errors += 1
-      @status = -1 if @errors >= 7
+      add_letter_to(bad_letters, letter)
+      self.errors += 1
+      self.status = :losing if use_all_attempts?
     end
+  end
+
+  def repeated?(letter)
+    good_letters.include?(letter) || bad_letters.include?(letter)
+  end
+
+  def good?(letter)
+    word.include?(letter)
+  end
+
+  def add_letter_to(list, letter)
+    list << letter
+  end
+
+  def guessed?
+    good_letters.sort == word.uniq.sort
+  end
+
+  def use_all_attempts?
+    errors >= MAX_ERRORS
   end
 end

@@ -1,60 +1,60 @@
-# Класс, отвечающий за вывод результатов на экран
 class ResultPrinter
-  def initialize
-    @status_image = []
-
-    current_path = File.dirname(__FILE__)
-    counter = 0
-    while counter <= 7
-      image_path = current_path + "/../data/images/#{counter}.txt"
+  def initialize(game)
+    @current_path = __dir__
+    @status_image = (0..game.max_errors).map do |counter|
+      image_path = @current_path + "/../data/images/#{counter}.txt"
       begin
-        f = File.new(image_path)
-        @status_image << f.read
-        f.close
+        File.read(image_path)
       rescue SystemCallError
-        @status_image << "\n" * 11 + '[ Изображение не найдено ]' + "\n" * 12
+        "\n" * 11 + '[ Изображение не найдено ]' + "\n" * 12
       end
-      counter += 1
     end
   end
 
-  # Выводим данные (слово, ошибки, плохие и хорошие буквы)
   def print_status(game)
     cls
-    STDOUT.puts "\nСлово: #{get_word_for_print(game.letters, game.good_letters)}"
+    STDOUT.puts "\nСлово: #{word_on_board(game.word, game.good_letters)}"
     STDOUT.puts "Ошибки (#{game.errors}): #{game.bad_letters.join(', ')}"
 
     print_viselica(game.errors)
 
-    if game.status == -1
-      STDOUT.puts "Вы проиграли, загадано было #{game.letters.join('')}\n\n"
-    elsif game.status == 1
+    if game.losing?
+      STDOUT.puts "Вы проиграли, загадано было #{game.word.join('')}\n\n"
+    elsif game.win?
       STDOUT.puts "Поздравляем, Вы выиграли!\n\n"
     else
-      STDOUT.puts "У Вас осталось #{7 - game.errors} попыток"
+      STDOUT.puts "Осталось попыток: #{game.errors_left}"
     end
   end
 
-  # Очищаем экран
   def cls
     system 'clear'
   end
 
+  def intro
+    begin
+      intro = File.read(@current_path + '/../data/intro.txt')
+      STDOUT.puts "\n" * 10, intro
+    rescue SystemCallError
+      STDOUT.puts "\n" * 10, 'Виселица'
+    end
+  end
+
   private
 
-  def get_word_for_print(letters, good_letters)
+  def word_on_board(word, good_letters)
     result = ''
-    letters.each do |letter|
-      if good_letters.include?(letter)
-        result += letter + ' '
-      else
-        result += '__ '
-      end
+    word.each do |letter|
+      result += if good_letters.include?(letter)
+                  letter + ' '
+                else
+                  '_ '
+                end
     end
     result
   end
 
-  def print_viselica(oshibki)
-    STDOUT.puts @status_image[oshibki]
+  def print_viselica(errors)
+    STDOUT.puts @status_image[errors]
   end
 end
