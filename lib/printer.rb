@@ -1,4 +1,4 @@
-class ResultPrinter
+class Printer
   def initialize(game)
     @current_path = __dir__
     @status_image = (0..game.max_errors).map do |counter|
