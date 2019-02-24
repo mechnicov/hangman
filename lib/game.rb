@@ -1,7 +1,8 @@
 class Game
+  MAX_ERRORS = 7
+
   attr_reader :word, :good_letters, :bad_letters
   attr_accessor :status, :errors
-  MAX_ERRORS = 7
 
   def initialize(word)
     @word         = form(word)
@@ -12,7 +13,7 @@ class Game
   end
 
   def ask_letter
-    STDOUT.puts 'Введите букву'
+    puts 'Введите букву'
     letter = ''
     letter = STDIN.gets.chomp.upcase while letter == ''
     letter = 'Е' if letter == 'Ё'

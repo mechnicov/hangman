@@ -1,3 +1,13 @@
+if (Gem.win_platform?)
+  Encoding.default_external = Encoding.find(Encoding.locale_charmap)
+  Encoding.default_internal = __ENCODING__
+
+  [STDIN, STDOUT].each do |io|
+    io.set_encoding(Encoding.default_external, Encoding.default_internal)
+  end
+end
+
+# require 'unicode_utils'
 require_relative 'lib/game'
 require_relative 'lib/printer'
 require_relative 'lib/reader'
@@ -5,12 +15,11 @@ require_relative 'lib/writer'
 
 words_path = "#{__dir__}/data/words.txt"
 user_input = nil
-until %w[о з д].include? user_input
-  STDOUT.puts "\n(О)тгадать слово, загаданное компьютером" \
-              "\n(З)агадать слово для второго игрока" \
-              "\n(Д)обавить слово в словарь комьютера"
-  STDOUT.print "\nВаш выбор: "
-  user_input = gets.chomp.downcase
+until %w(о з).include? user_input
+  puts "\n(О)тгадать слово, загаданное компьютером" \
+       "\n(З)агадать слово для второго игрока"
+  print "\nВаш выбор: "
+  user_input = STDIN.gets.chomp.downcase
 end
 
 mode = case user_input
@@ -19,13 +28,6 @@ mode = case user_input
        end
 
 reader = Reader.new
-
-if mode == :update_words
-  writer = Writer.new(reader)
-  writer.write_to_file(words_path)
-  STDOUT.puts 'Словарь компьютера успешно обновлён'
-  exit
-end
 
 word = if mode == :computer
          reader.words_from_file(words_path).sample

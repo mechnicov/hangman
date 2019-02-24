@@ -1,8 +1,7 @@
 class Printer
   def initialize(game)
-    @current_path = __dir__
     @status_image = (0..game.max_errors).map do |counter|
-      image_path = @current_path + "/../data/images/#{counter}.txt"
+      image_path = "#{__dir__}/../data/images/#{counter}.txt"
       begin
         File.read(image_path)
       rescue SystemCallError
@@ -13,17 +12,17 @@ class Printer
 
   def print_status(game)
     cls
-    STDOUT.puts "\nСлово: #{word_on_board(game.word, game.good_letters)}"
-    STDOUT.puts "Ошибки (#{game.errors}): #{game.bad_letters.join(', ')}"
+    puts "\nСлово: #{word_on_board(game.word, game.good_letters)}"
+    puts "Ошибки (#{game.errors}): #{game.bad_letters.join(', ')}"
 
     print_viselica(game.errors)
 
     if game.losing?
-      STDOUT.puts "Вы проиграли, загадано было #{game.word.join('')}\n\n"
+      puts "Вы проиграли, загадано было #{game.word.join('')}\n\n"
     elsif game.win?
-      STDOUT.puts "Поздравляем, Вы выиграли!\n\n"
+      puts "Поздравляем, Вы выиграли!\n\n"
     else
-      STDOUT.puts "Осталось попыток: #{game.errors_left}"
+      puts "Осталось попыток: #{game.errors_left}"
     end
   end
 
@@ -33,10 +32,10 @@ class Printer
 
   def intro
     begin
-      intro = File.read(@current_path + '/../data/intro.txt')
-      STDOUT.puts "\n" * 10, intro
+      intro = File.read("#{__dir__}/../data/intro.txt")
+      puts "\n" * 10, intro
     rescue SystemCallError
-      STDOUT.puts "\n" * 10, 'Виселица'
+      puts "\n" * 10, 'Виселица'
     end
   end
 
@@ -55,6 +54,6 @@ class Printer
   end
 
   def print_viselica(errors)
-    STDOUT.puts @status_image[errors]
+    puts @status_image[errors]
   end
 end
