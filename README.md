@@ -1,37 +1,69 @@
-## Виселица
+## Hangman
 
-### Описание
+### Description
 
-Консольная игра, реализована на Ruby.
+Console game, implemented in Ruby.
 
-Основные правила – см. [статью на Википедии](https://ru.wikipedia.org/wiki/Виселица_(игра))
+Language: Russian.
 
-В игре 2 режима. Загадывается либо слово, введённое в консоли, либо произвольное слово из словаря программы.
+Basic rules – see at [Wikipedia](https://en.wikipedia.org/wiki/Hangman_(game)).
 
-Пользователю даётся 7 попыток, чтобы угадать слово.
+The game has 2 modes (random word from dictionary or user input).
 
-### Запуск программы
+The user is given 7 attempts to guess the word.
 
-Для запуска необходимо набрать в консоли:
+### Launching
 
-```
-ruby viselica.rb
-```
+1. Download repo to your local directory. If your Ruby version is 2.4 or higher – go to Item 4.
 
-### Изменение списка слов
-
-В программе есть режим добавления пользовательских слов в словарь.
-
-Также это можно сделать вручную, изменив файл `data/words.txt`, при этом каждое слово должно быть на отдельной строке, пустые строки должны осутствовать.
-
-### Лицензия
-
-MIT – см. `LICENSE`
-
-### Контакты
-
-Пишите мне по адресу:
+2. To install gem `unicode_utils` type
 
 ```
+$ bundle install
+```
+
+3. Comment out lines in `hangman.rb` and `add_words.rb`
+
+```rb
+require 'unicode_utils'
+```
+
+4. For Ruby 2.4 and higher type to run
+
+```
+$ ruby hangman.rb
+```
+
+Else
+
+```
+$ bundle exec ruby hangman.rb
+```
+
+### Changing dictionary
+
+To add new words run for Ruby 2.4 and higher
+
+```
+$ ruby add_words.rb
+```
+
+Else
+
+```
+$ bundle exec ruby add_words.rb
+```
+
+You can also do this manually by changing `data/words.txt`, each word should be on a separate line, blank lines should be missing.
+
+### License
+
+MIT – see `LICENSE`
+
+### Contacts
+
+Email me at
+
+```rb
 'dcdl-snotynu?fl`hk-bnl'.each_char.map(&:succ).join
 ```
