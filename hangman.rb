@@ -8,6 +8,7 @@ if (Gem.win_platform?)
 end
 
 # require 'unicode_utils'
+require 'colorize'
 require_relative 'lib/game'
 require_relative 'lib/printer'
 require_relative 'lib/reader'
@@ -17,19 +18,14 @@ words_path = "#{__dir__}/data/words.txt"
 user_input = nil
 until %w(о з).include? user_input
   puts "\n(О)тгадать слово, загаданное компьютером" \
-       "\n(З)агадать слово для второго игрока"
+       "\n(З)агадать слово для второго игрока".colorize(:blue)
   print "\nВаш выбор: "
   user_input = STDIN.gets.chomp.downcase
 end
 
-mode = case user_input
-       when 'д' then :update_words
-       when 'о' then :computer
-       end
-
 reader = Reader.new
 
-word = if mode == :computer
+word = if user_input == 'о'
          reader.words_from_file(words_path).sample
        else
          reader.word_from_console

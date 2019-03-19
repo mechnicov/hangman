@@ -8,6 +8,7 @@ if (Gem.win_platform?)
 end
 
 # require 'unicode_utils'
+require 'colorize'
 require_relative 'lib/reader'
 require_relative 'lib/writer'
 
@@ -16,5 +17,5 @@ reader = Reader.new
 writer = Writer.new(reader)
 
 writer.write_to_file(words_path)
-puts 'Словарь компьютера успешно обновлён'
+puts 'Словарь компьютера успешно обновлён'.colorize(:light_green)
 exit

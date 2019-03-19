@@ -16,25 +16,25 @@ The user is given 7 attempts to guess the word.
 
 1. Download repo to your local directory. If your Ruby version is 2.4 or higher – go to Item 4.
 
-2. To install gem `unicode_utils` type
-
-```
-$ bundle install
-```
-
-3. Comment out lines in `hangman.rb` and `add_words.rb`
+2. Comment out lines in `hangman.rb` and `add_words.rb`
 
 ```rb
 require 'unicode_utils'
 ```
 
-4. For Ruby 2.4 and higher type to run
+3. Comment out line in `Gemfile`
+
+```rb
+gem 'unicode_utils'
+```
+
+4. Use bundler
 
 ```
-$ ruby hangman.rb
+$ bundle install
 ```
 
-Else
+5. Type to run
 
 ```
 $ bundle exec ruby hangman.rb
@@ -42,15 +42,9 @@ $ bundle exec ruby hangman.rb
 
 ### Changing dictionary
 
-To add new words run for Ruby 2.4 and higher
+To add new words run
 
-```
-$ ruby add_words.rb
-```
-
-Else
-
-```
+```console
 $ bundle exec ruby add_words.rb
 ```
 

@@ -12,17 +12,17 @@ class Printer
 
   def print_status(game)
     cls
-    puts "\nСлово: #{word_on_board(game.word, game.good_letters)}"
-    puts "Ошибки (#{game.errors}): #{game.bad_letters.join(', ')}"
+    puts "\nСлово: #{word_on_board(game.word, game.good_letters)}".colorize(:light_green)
+    puts "Ошибки (#{game.errors}): #{game.bad_letters.join(', ')}".colorize(:light_red)
 
     print_viselica(game.errors)
 
     if game.losing?
-      puts "Вы проиграли, загадано было #{game.word.join('')}\n\n"
+      puts "Вы проиграли, загадано было #{game.word.join('')}\n\n".colorize(:light_red).blink
     elsif game.win?
-      puts "Поздравляем, Вы выиграли!\n\n"
+      puts "Поздравляем, Вы выиграли!\n\n".colorize(:light_green).blink
     else
-      puts "Осталось попыток: #{game.errors_left}"
+      puts "Осталось попыток: #{game.errors_left}".colorize(:light_red)
     end
   end
 
@@ -33,9 +33,9 @@ class Printer
   def intro
     begin
       intro = File.read("#{__dir__}/../data/intro.txt")
-      puts "\n" * 10, intro
+      puts "\n" * 10, intro.white.on_blue
     rescue SystemCallError
-      puts "\n" * 10, 'Виселица'
+      puts "\n" * 10, 'Виселица'.colorize(:blue)
     end
   end
 
@@ -54,6 +54,6 @@ class Printer
   end
 
   def print_viselica(errors)
-    puts @status_image[errors]
+    puts @status_image[errors].colorize(:blue)
   end
 end

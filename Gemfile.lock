@@ -1,13 +1,13 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    unicode_utils (1.4.0)
+    colorize (0.8.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  unicode_utils
+  colorize
 
 BUNDLED WITH
-   1.17.1
+   1.17.3
